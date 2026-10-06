@@ -6,6 +6,14 @@
 
 ## 安装
 
+**方式一：下载 ZIP 直接用**
+
+[astrbot_plugin_admin_model_router_v1.1.0.zip](https://github.com/efk36/astrbot-plugin-admin-model-router/releases/download/v1.1.0/astrbot_plugin_admin_model_router_v1.1.0.zip)
+
+下载后解压，把 `astrbot_plugin_admin_model_router` 目录放进 AstrBot 的 `data/plugins/` 下，重启 AstrBot。
+
+**方式二：从仓库安装**
+
 克隆到 AstrBot 插件目录，或在 WebUI 插件市场里用仓库地址安装：
 
 ```bash
@@ -81,6 +89,14 @@ git clone https://github.com/efk36/astrbot-plugin-admin-model-router.git
 ```
 
 `source=config` 表示用的是配置里的 `admin_provider_id`，`source=session` 表示用的是会话内指定的模型。
+
+## 更新日志
+
+### 1.1.0
+
+- 新增 `respect_session_model`：会话内已指定模型时优先跟随，无指定才用 `admin_provider_id`
+- 找不到 provider 时，日志和 `/模型路由` 会列出当前可用的 provider ID -> 模型名
+- `selected_provider` 已被其他插件设置时跳过，不覆盖
 
 ## 兼容性
 
