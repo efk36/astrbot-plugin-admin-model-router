@@ -1,0 +1,19 @@
+name: astrbot_plugin_admin_model_router
+display_name: 管理员模型路由
+short_desc: 管理员自动用指定模型回复，普通用户走默认模型
+desc: 管理员自动切换到指定模型回复，普通用户走 AstrBot 默认模型，指定模型异常时按配置重试并回落
+version: 1.1.0
+author: efk36
+repo: https://github.com/efk36/astrbot-plugin-admin-model-router
+astrbot_version: ">=4.0.0"
+support_platforms:
+  - aiocqhttp
+  - telegram
+  - discord
+  - wecom
+  - lark
+tags:
+  - 模型路由
+  - 管理员
+  - 效率
+social_link: https://github.com/efk36
