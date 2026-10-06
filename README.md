@@ -6,22 +6,24 @@
 
 ## 安装
 
-**方式一：下载 ZIP 直接用**
+**方式一：WebUI 插件市场**
+
+在 AstrBot WebUI 的插件市场搜索「管理员模型路由」安装。
+
+**方式二：下载 ZIP 直接用**
 
 [astrbot_plugin_admin_model_router_v1.1.0.zip](https://github.com/efk36/astrbot-plugin-admin-model-router/releases/download/v1.1.0/astrbot_plugin_admin_model_router_v1.1.0.zip)
 
 下载后解压，把 `astrbot_plugin_admin_model_router` 目录放进 AstrBot 的 `data/plugins/` 下，重启 AstrBot。
 
-**方式二：从仓库安装**
-
-克隆到 AstrBot 插件目录，或在 WebUI 插件市场里用仓库地址安装：
+**方式三：从仓库安装**
 
 ```bash
 cd /AstrBot/data/plugins
 git clone https://github.com/efk36/astrbot-plugin-admin-model-router.git
 ```
 
-安装后重启 AstrBot。
+`metadata.yaml` 在仓库根目录，重启 AstrBot 后生效。
 
 ## 工作方式
 
@@ -97,6 +99,11 @@ git clone https://github.com/efk36/astrbot-plugin-admin-model-router.git
 - 新增 `respect_session_model`：会话内已指定模型时优先跟随，无指定才用 `admin_provider_id`
 - 找不到 provider 时，日志和 `/模型路由` 会列出当前可用的 provider ID -> 模型名
 - `selected_provider` 已被其他插件设置时跳过，不覆盖
+
+### 1.1.1
+
+- `metadata.yaml` 移到仓库根目录，修复从仓库安装时提示「未在仓库根目录找到 metadata.yaml」的问题
+- 补充 `short_desc`、`tags`、`support_platforms`、`social_link`，便于在插件市场被检索到
 
 ## 兼容性
 
