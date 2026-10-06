@@ -99,11 +99,8 @@ git clone https://github.com/efk36/astrbot-plugin-admin-model-router.git
 - 新增 `respect_session_model`：会话内已指定模型时优先跟随，无指定才用 `admin_provider_id`
 - 找不到 provider 时，日志和 `/模型路由` 会列出当前可用的 provider ID -> 模型名
 - `selected_provider` 已被其他插件设置时跳过，不覆盖
-
-### 1.1.1
-
-- `metadata.yaml` 移到仓库根目录，修复从仓库安装时提示「未在仓库根目录找到 metadata.yaml」的问题
-- 补充 `short_desc`、`tags`、`support_platforms`、`social_link`，便于在插件市场被检索到
+- 仓库结构改为 `metadata.yaml` 在根目录，修复从仓库安装时提示「未在仓库根目录找到 metadata.yaml」的问题
+- `metadata.yaml` 补充 `short_desc`、`tags`、`support_platforms`、`social_link`，便于在插件市场被检索到
 
 ## 兼容性
 
