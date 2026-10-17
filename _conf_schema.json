@@ -19,10 +19,13 @@
   },
   "group_provider_ids": {
     "description": "按群聊指定专属模型",
-    "type": "object",
+    "type": "dict",
     "items": {},
     "default": {},
-    "hint": "键填群号，值填该群使用的 provider ID。配置后该群里管理员的消息优先走群专属模型（优先级：会话内指定 > 群专属 > admin_provider_id）。普通用户始终走默认模型不受影响"
+    "template_schema": {
+      "群号": { "name": "示例：123456789", "type": "string", "default": "" }
+    },
+    "hint": "点开编辑器添加键值对：键填群号，值填该群使用的 provider ID（值类型选 string）。配置后该群里管理员的消息优先走群专属模型（优先级：会话内指定 > 群专属 > admin_provider_id）。普通用户始终走默认模型不受影响"
   },
   "respect_session_model": {
     "description": "跟随会话内指定的模型",
