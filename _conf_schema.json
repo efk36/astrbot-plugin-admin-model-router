@@ -17,11 +17,18 @@
     "default": [],
     "hint": "这些 QQ 号和 AstrBot 管理员一样走指定模型。AstrBot 管理员本身已自动纳入"
   },
+  "group_provider_ids": {
+    "description": "按群聊指定专属模型",
+    "type": "object",
+    "items": {},
+    "default": {},
+    "hint": "键填群号，值填该群使用的 provider ID。配置后该群里管理员的消息优先走群专属模型（优先级：会话内指定 > 群专属 > admin_provider_id）。普通用户始终走默认模型不受影响"
+  },
   "respect_session_model": {
     "description": "跟随会话内指定的模型",
     "type": "bool",
     "default": true,
-    "hint": "开启后，若该会话已经指定过模型（在 WebUI 会话管理或用指令切过），优先用会话里那个；没有才用上面的 admin_provider_id。关闭则始终强制用 admin_provider_id"
+    "hint": "开启后，若该会话已经指定过模型（在 WebUI 会话管理或用指令切过），优先用会话里那个；没有才按 群映射 -> admin_provider_id 的顺序"
   },
   "max_retries": {
     "description": "指定模型探测失败时的重试次数",
