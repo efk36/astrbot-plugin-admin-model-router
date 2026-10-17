@@ -9,9 +9,9 @@ SESSION_PROVIDER_KEY = "provider_perf_chat_completion"
 
 
 class AdminModelRouterPlugin(Star):
-    """按发送者身份路由到不同的对话模型。
+    """按发送者身份和群聊路由到不同的对话模型。
 
-    管理员 -> 会话内已指定的模型优先，否则用配置里指定的 provider
+    管理员 -> 会话内已指定的模型优先，其次群专属模型，最后用配置里指定的 provider
     普通用户 -> AstrBot 自身配置的默认 provider
 
     目标 provider 不可用时，先按可配置次数重试探测，仍失败则回落到默认模型。
@@ -41,6 +41,17 @@ class AdminModelRouterPlugin(Star):
 
     def _respect_session_model(self) -> bool:
         return bool(self.config.get("respect_session_model", True))
+
+    def _group_provider_ids(self) -> dict[str, str]:
+        """群号 -> provider ID 映射，键值都转成字符串并去空白。"""
+        raw = self.config.get("group_provider_ids") or {}
+        if not isinstance(raw, dict):
+            return {}
+        return {
+            str(k).strip(): str(v).strip()
+            for k, v in raw.items()
+            if str(k).strip() and str(v).strip()
+        }
 
     def _max_retries(self) -> int:
         try:
@@ -129,11 +140,17 @@ class AdminModelRouterPlugin(Star):
         """决定管理员该用哪个 provider。
 
         返回 (provider_id, 来源标记)。来源标记用于日志和 /模型路由 输出。
+        优先级：会话内指定 > 群专属映射 > admin_provider_id。
         """
         if self._respect_session_model():
             session_id = await self._session_provider_id(event)
             if session_id:
                 return session_id, "session"
+        group_id = event.get_group_id()
+        if group_id:
+            group_provider = self._group_provider_ids().get(str(group_id).strip())
+            if group_provider:
+                return group_provider, f"group:{group_id}"
         return self._admin_provider_id(), "config"
 
     # ---------- 可用性探测 ----------
@@ -269,7 +286,10 @@ class AdminModelRouterPlugin(Star):
             return
 
         target_id, source = await self._resolve_target(event)
-        source_label = "会话内指定的模型" if source == "session" else "插件配置 admin_provider_id"
+        source_label = {
+            "session": "会话内指定的模型",
+            "config": "插件配置 admin_provider_id",
+        }.get(source, f"群 {source.split(':', 1)[-1]} 的专属模型")
 
         if not target_id:
             yield event.plain_result(
